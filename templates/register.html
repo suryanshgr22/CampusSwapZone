@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    
+
+    <form action="/register" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="College Email" type="email">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="password" name="confirmation" placeholder="Confirm Password" type="password">
+        </div>
+        <div class="mb-3">
+        <select name="semester">
+            <option disabled selected>SEMESTER</option>
+            {% for semester in semesters %}
+            <option value={{semester}}>{{semester}}</option>
+            {% endfor %}
+        </select>
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="hostel" name="hostel" placeholder="Hostel ie. A, B, etc." type="text">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="course" name="course" placeholder="Course" type="text">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+{% endblock %}

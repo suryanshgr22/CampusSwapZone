@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+{% block title %}
+    Chat
+{% endblock %}
+
+
+{% block main %}
+<table align="left">
+<tr>
+  <th><div class="card">
+    <div class="card-body">
+      <h3>YOUR CHATS</h3>
+    </div>
+  </div></th>
+</tr>
+<tr>
+  <td><br>
+  </td>
+</tr>
+{% for message in messages %}
+  {% for row in rows %}
+    {% if row["id"] == message["listingid"]%}
+    <tr>
+      <td>
+        <div class="card">
+          <div class="card-header">
+            {% for item in items %}
+                {% if item["id"] == row["category"]%}
+                  {{item["name"]}}
+                {% endif %}
+            {% endfor %}
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{row["title"]}}</h5>
+            <p class="card-text">PRICE : &#8377;{{row["price"]}}</p>
+            <form action="/chat" method="get">
+
+              <input name="buyerid" type="hidden" value="{{message["buyerid"]}}">
+              <input name="listing" type="hidden" value="{{message["listingid"]}}">
+              {% if session["user_id"] == row["sellerid"]%}
+              <p class="card-text">{{names[message["buyerid"]]}}</p>
+              <button type="submit" class="btn btn-success">Chat with Buyer </button>
+              {% else %}
+              <button type="submit" class="btn btn-success">Chat with SELLER</button>
+              {% endif %}
+            </form>
+          </div>
+       </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <br>
+      </td>
+    </tr>
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+</table>
+
+
+{% block chat %}{% endblock %}
+
+{% endblock %}
+

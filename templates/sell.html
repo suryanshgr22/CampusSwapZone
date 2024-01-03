@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <table align="center">
+    <tr>
+      <th><div class="card">
+        <div class="card-body">
+    <form action="/sell" method="post" class="row gy-2 gx-3 align-items-center">
+    <div class="col-auto">
+      <label class="visually-hidden" for="autoSizingInput">Name</label>
+      <input type="text" class="form-control" id="autoSizingInput"name="title" placeholder="Title">
+    </div>
+    <div class="col-auto">
+      <label class="visually-hidden" for="autoSizingInputGroup">Username</label>
+      <div class="input-group">
+        <div class="input-group-text">&#8360;</div>
+        <input type="text" class="form-control" name="price" id="autoSizingInputGroup" placeholder="Price">
+      </div>
+    </div>
+    <div class="col-auto">
+      <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+      <select class="form-select" id="autoSizingSelect" name="category">
+        <option disabled selected>Category</option>
+            {% for item in items %}
+            <option value={{item["id"]}}>{{item["name"]}}</option>
+            {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+  </div></div></th></tr>
+  <tr>
+    <th><div class="card">
+      <div class="card-body">
+        <h3>YOUR LISTINGS</h3>
+      </div>
+    </div></th>
+  </tr>
+  <tr>
+    <td><br>
+    </td>
+  </tr>
+  {% for row in rows %}
+      <tr>
+        <td>
+          <div class="card">
+            <div class="card-header">
+              {% for item in items %}
+                {% if item["id"] == row["category"]%}
+                  {{item["name"]}}
+                {% endif %}
+            {% endfor %}
+
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{row["title"]}}</h5>
+              <p class="card-text">IN : {{row["price"]}}     {{row["date"]}}</p>
+              <form action="/delete" method="post">
+                <input name="id" type="hidden" value="{{row["id"]}}">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </div>
+         </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <br>
+        </td>
+      </tr>
+      {% endfor %}
+</table>
+
+
+{% endblock %}
+
+
+
+
+

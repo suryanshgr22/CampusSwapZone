@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+
+  <div class="card" style="width: 18rem; position:fixed">
+    <table>
+      <tr><th>
+        <div class="card-header">SELECT ITEMS</div>
+      </th></tr>
+
+      <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+        <tr><td align="center">
+          <form action="/" method="get">
+          <button type="submit" class="btn btn-primary btn-sm">ALL</button>
+          </form>
+        </td></tr>
+
+        {% for item in items %}
+        <tr><td align="center">
+        <form action="/" method="post">
+        <input name="id" type="hidden" value="{{item["id"]}}">
+        <button type="submit" class="btn btn-primary btn-sm" data-toggle="button" aria-pressed="false">{{item["name"]}}</button>
+        </form>
+        </td></tr>
+
+        {% endfor %}
+      </div>
+
+    </table>
+
+    </div>
+
+
+    <table align="center">
+      <tr>
+        <th><div class="card">
+          <div class="card-body">
+            <h3>LISTINGS</h3>
+          </div>
+        </div></th>
+      </tr>
+      <tr>
+        <td><br>
+        </td>
+      </tr>
+      {% for row in rows %}
+      <tr>
+        <td>
+          <div class="card">
+            <div class="card-header">
+              {% for item in items %}
+                {% if item["id"] == row["category"]%}
+                  {{item["name"]}}
+                {% endif %}
+            {% endfor %}
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title">{{row["title"]}}</h5>
+              <p class="card-text">PRICE : &#8377;{{row["price"]}}    </p>
+              <table align="center">
+                <tr>
+              {% if session["user_id"] == row["sellerid"]%}
+              <td>
+              <form action="/delete" method="post">
+                <input name="id" type="hidden" value="{{row["id"]}}">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </td>
+
+              {% else %}
+                <td>
+              <form action="/requests" method="post">
+                <input name="listing" type="hidden" value="{{row["id"]}}">
+                <button type="submit" class="btn btn-success">Chat</button>
+              </form>
+            </td>
+            {% endif %}
+            </tr>
+            </table>
+
+            </div>
+         </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <br>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

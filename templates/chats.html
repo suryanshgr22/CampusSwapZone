@@ -1,0 +1,53 @@
+{% extends "chat.html" %}
+{% block chat %}
+
+<table align="center">
+    <tr><td>
+    <div id="" style="overflow:auto; height:200px; width:400px; border:1px solid grey">
+      <div>CHAT MEET BUY
+        <form action="/chat" method="get">
+        <input name="buyerid" type="hidden" value="{{buyerid}}">
+        <input name="listing" type="hidden" value="{{listing}}">
+        <button type="submit" class="btn btn-secondary btn-sm">REFRESH</button>
+      </form>
+    </div>
+      <hr>
+        <table align="center" style="width:90%">
+        <tbody>
+    {% for c in chats %}
+        {% if session["user_id"] == c["senderid"]%}
+          {% if c["content"] != None %}
+        <tr><td></td><td align="right">
+          {{c["content"]}}
+        </td></tr>
+        {% endif %}
+        {% else %}
+        {% if c["content"] != None %}
+        <tr><td align="left">
+         {{c["content"]}}
+        </td><td></td></tr>
+        {% endif %}
+        {% endif %}
+  {% endfor %}
+  </tbody>
+
+  </table>
+  </div>
+  <div class="input-group mb-3">
+    <section>
+    <form action="/chat" method="post">
+    {% if session["user_id"] == buyerid %}
+    <input name="id" type="hidden" value="{{sellerid}}">
+    {% else %}
+    <input name="id" type="hidden" value="{{buyerid}}">
+    {% endif %}
+    <input name="listing" type="hidden" value="{{listing}}">
+    <input name="content" type="text" class="form-control" placeholder="Message" aria-label="Recipient's username" aria-describedby="button-addon2">
+  </section>
+  <section>
+    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Send</button>
+    </form>
+    </section>
+  </div>
+  </td></tr></table>
+{% endblock %}
